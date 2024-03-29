@@ -1,5 +1,8 @@
 trigger:
-- main
+ branches:
+   include:
+     - terra
+
 
 pool:
   vmImage: ubuntu-latest
