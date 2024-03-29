@@ -7,3 +7,4 @@ export interface User extends Document {
   password: string;
   resetToken?: string;
 }
+//
