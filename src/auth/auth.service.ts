@@ -3,7 +3,6 @@ import { sign, verify } from 'jsonwebtoken';
 import { createTransport } from 'nodemailer';
 import { Payload } from 'src/types/payload';
 import { UserService } from 'src/user/user.service';
-import { User } from 'src/types/user';
 import { ResetPasswordDTO } from './dtos/reset-password.dto';
 import { JwtPayload } from 'jsonwebtoken';
 
@@ -30,7 +29,7 @@ export class AuthService {
     const resetLink = `http://localhost:3000/reset-password/:email?secret=${resetToken}`;
 
     // send the mail here ...
-    let transporter = createTransport({
+    const transporter = createTransport({
       service: 'gmail',
       auth: {
         user: 'amiinhm1@gmail.com',
@@ -38,11 +37,11 @@ export class AuthService {
       },
     });
 
-    var mailOptions = {
+    const mailOptions = {
       from: 'amiinhm1@gmail.com',
       to: email,
       subject: 'AppName - reset your password',
-      text: `Acces this link to reset your password: ${resetLink}`,
+      text: `Access this link to reset your password: ${resetLink}`,
     };
 
     return await transporter.sendMail(mailOptions);
