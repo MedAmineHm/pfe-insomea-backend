@@ -20,7 +20,7 @@ spec:
           service:
             name: my-nest-app-service
             type: LoadBalancer
-            port: 80
+            port: 3002
 
     # Release pour MongoDB
     - name: mongodb

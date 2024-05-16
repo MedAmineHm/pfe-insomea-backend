@@ -8,8 +8,8 @@ spec:
     app: my-nest-app
   type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: 3000
+    - port: 3002
+      targetPort: 3001
 
 ---
 # Service YAML pour MongoDB
