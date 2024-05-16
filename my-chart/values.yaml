@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: HelmRelease
 metadata:
-  name: nestjs-mongodb
+  name: nestjs-mongodb-redis
 spec:
   releases:
     # Release pour l'application Nest.js
@@ -21,6 +21,17 @@ spec:
             name: my-nest-app-service
             type: LoadBalancer
             port: 3002
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: admin
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: admin
+            - name: MONGO_URI
+              value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: '6379'
 
     # Release pour MongoDB
     - name: mongodb
@@ -38,3 +49,21 @@ spec:
           env:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: admin
+
+    # Release pour Redis
+    - name: redis
+      chart:
+        repository: https://charts.example.com/stable
+        name: redis
+        version: 1.0.0
+      values:
+        - name: redis
+          replicaCount: 1
+          image:
+            repository: redis
+            tag: latest
+            pullPolicy: IfNotPresent
+          service:
+            name: redis-service
+            type: ClusterIP
+            port: 6379

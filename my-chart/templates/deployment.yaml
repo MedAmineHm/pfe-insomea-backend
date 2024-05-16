@@ -26,7 +26,10 @@ spec:
               value: admin
             - name: MONGO_URI
               value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: '6379'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -54,3 +57,25 @@ spec:
               value: admin
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: admin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
