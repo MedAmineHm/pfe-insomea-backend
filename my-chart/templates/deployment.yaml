@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: my-nest-app
-          image: mohamedamine1/backend:backend
+          image: mohamedamine1/backend-azure:backend
           ports:
             - containerPort: 3001
           env:
