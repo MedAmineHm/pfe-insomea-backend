@@ -1,0 +1,25 @@
+# Service YAML pour l'application Nest.js
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nest-app-service
+spec:
+  selector:
+    app: my-nest-app
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+
+---
+# Service YAML pour MongoDB
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
