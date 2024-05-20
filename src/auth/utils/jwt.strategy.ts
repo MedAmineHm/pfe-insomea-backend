@@ -3,6 +3,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, VerifiedCallback } from 'passport-jwt';
 import { Strategy } from 'passport-jwt';
 import { AuthService } from '../auth.service';
+import * as dotenv from 'dotenv'; // Importer le module dotenv
+
+dotenv.config({ path: 'backend.env' }); // Charger les variables d'environnement à partir de backend.env
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

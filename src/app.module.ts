@@ -9,15 +9,17 @@ import { redisStore } from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: 'backend.env',
+    }),
     MongooseModule.forRoot(process.env.MONGO_URI),
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () => ({
         store: await redisStore({
           socket: {
-            host: 'localhost',
-            port: 6379,
+            host: process.env.REDIS_HOST,
+            port: parseInt(process.env.REDIS_PORT, 10),
           },
         }),
       }),

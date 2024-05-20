@@ -5,6 +5,9 @@ import { Payload } from 'src/types/payload';
 import { UserService } from 'src/user/user.service';
 import { ResetPasswordDTO } from './dtos/reset-password.dto';
 import { JwtPayload } from 'jsonwebtoken';
+import * as dotenv from 'dotenv'; // Importer le module dotenv
+
+dotenv.config({ path: 'backend.env' });
 
 @Injectable()
 export class AuthService {

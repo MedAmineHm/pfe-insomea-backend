@@ -1,20 +1,49 @@
-# Utiliser l'image Node.js comme base
-FROM node:14
+###################
+# BUILD FOR LOCAL DEVELOPMENT
+###################
 
-# Créer le répertoire de travail de l'application dans l'image Docker
+FROM node:18-alpine As development
+
 WORKDIR /usr/src/app
 
-# Copier les fichiers package.json et package-lock.json pour tirer parti du cache Docker
 COPY package*.json ./
-
-# Installer les dépendances de l'application
-RUN npm install
-
-# Copier le reste des fichiers de l'application
+RUN npm ci
 COPY . .
 
-# Exposer le port sur lequel l'application s'exécutera dans le conteneur Docker
-EXPOSE 3000
+COPY backend.env ./
 
-# Commande pour démarrer l'application
-CMD ["node", "app.js"]
+USER node
+
+###################
+# BUILD FOR PRODUCTION
+###################
+
+FROM node:18-alpine As build
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+COPY --from=development /usr/src/app/node_modules ./node_modules
+COPY . .
+
+COPY backend.env ./
+
+RUN npm run build
+
+ENV NODE_ENV production
+
+RUN npm ci --only=production && npm cache clean --force
+
+USER node
+
+###################
+# PRODUCTION
+###################
+
+FROM node:18-alpine As production
+
+COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/dist ./dist
+COPY backend.env ./
+
+CMD [ "node", "dist/main.js" ]

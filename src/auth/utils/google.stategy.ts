@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
+import * as dotenv from 'dotenv';
+
+// Charger les variables d'environnement à partir de backend.env
+dotenv.config({ path: 'backend.env' });
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -13,7 +17,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     });
   }
 
-  // make sure to add this or else you won't get the refresh token
   authorizationParams(): { [key: string]: string } {
     return {
       access_type: 'offline',

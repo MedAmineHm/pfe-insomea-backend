@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+
+  app:
+    image: backend-azure
+    container_name: nestjs_app
+    restart: always
+    ports:
+      - '3001:3001'
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      MONGO_URI: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
