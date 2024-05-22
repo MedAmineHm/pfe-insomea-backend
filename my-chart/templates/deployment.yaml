@@ -1,4 +1,3 @@
-# Deployment for Nest.js application
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,7 +27,6 @@ spec:
             - name: REDIS_PORT
               value: '6379'
 ---
-# Deployment for MongoDB
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,8 +60,8 @@ spec:
         - name: mongodb-storage
           persistentVolumeClaim:
             claimName: mongodb-pvc
+
 ---
-# Deployment for Redis
 apiVersion: apps/v1
 kind: Deployment
 metadata:

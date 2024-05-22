@@ -1,4 +1,4 @@
-# Service for Nest.js application
+# Service YAML pour l'application Nest.js
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,7 +11,7 @@ spec:
     - port: 3001
       targetPort: 3001
 ---
-# Service for MongoDB
+# Service YAML pour MongoDB
 apiVersion: v1
 kind: Service
 metadata:
@@ -23,7 +23,7 @@ spec:
     - port: 27017
       targetPort: 27017
 ---
-# Service for Redis
+# Service YAML pour Redis
 apiVersion: v1
 kind: Service
 metadata:
