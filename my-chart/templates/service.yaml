@@ -23,11 +23,11 @@ spec:
     - port: 27017
       targetPort: 27017
 ---
-# Service YAML pour Redis
+# Service for Redis
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-service
+  name: redis
   labels:
     app: redis
 spec:

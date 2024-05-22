@@ -1,3 +1,4 @@
+# Deployment for Nest.js application
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,7 +24,7 @@ spec:
             - name: MONGO_URI
               value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
             - name: REDIS_HOST
-              value: redis
+              value: redis # Ensure this matches the Redis service name
             - name: REDIS_PORT
               value: '6379'
 ---
