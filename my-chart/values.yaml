@@ -42,9 +42,9 @@ spec:
           pullPolicy: IfNotPresent
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
-            value: admin
+            value: amine
           - name: MONGO_INITDB_ROOT_PASSWORD
-            value: admin
+            value: Hamido123
 
     # Release for Redis
     - name: redis
