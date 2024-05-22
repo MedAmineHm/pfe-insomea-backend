@@ -24,10 +24,10 @@ spec:
       targetPort: 27017
 ---
 # Service YAML pour Redis
-apiVersion: v1
+aapiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: redis-service
   labels:
     app: redis
 spec:
@@ -37,3 +37,4 @@ spec:
     - protocol: TCP
       port: 6379
       targetPort: 6379
+  type: ClusterIP

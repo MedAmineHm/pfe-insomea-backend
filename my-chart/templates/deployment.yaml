@@ -52,7 +52,7 @@ spec:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: amine
             - name: MONGO_INITDB_ROOT_PASSWORD
-              value: Hamido123
+              value: Hamidou123
           volumeMounts:
             - name: mongodb-storage
               mountPath: /data/db
@@ -60,6 +60,7 @@ spec:
         - name: mongodb-storage
           persistentVolumeClaim:
             claimName: mongodb-pvc
+
 ---
 apiVersion: apps/v1
 kind: Deployment
