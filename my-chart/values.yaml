@@ -27,7 +27,7 @@ spec:
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: admin
             - name: MONGO_URI
-              value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+              value: 'mongodb://admin:admin@mongodb-service:27017/?authSource=admin&retryWrites=true&w=majority'
             - name: REDIS_HOST
               value: redis
             - name: REDIS_PORT
