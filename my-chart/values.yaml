@@ -21,10 +21,6 @@ spec:
           type: LoadBalancer
           port: 3002
         env:
-          - name: MONGO_INITDB_ROOT_USERNAME
-            value: amine
-          - name: MONGO_INITDB_ROOT_PASSWORD
-            value: Hamidou123
           - name: MONGO_URI
             value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
           - name: REDIS_HOST
