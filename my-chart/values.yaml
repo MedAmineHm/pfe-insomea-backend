@@ -22,7 +22,7 @@ spec:
           port: 3002
         env:
           - name: MONGO_URI
-            value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+            value: 'mongodb://amine:Hamidou123@mongodb-service:27017/?retryWrites=true&w=majority&appName=Cluster0'
           - name: REDIS_HOST
             value: redis
           - name: REDIS_PORT
