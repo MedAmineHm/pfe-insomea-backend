@@ -1,3 +1,4 @@
+# PersistentVolume for MongoDB
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -8,8 +9,9 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: '/mnt/data/mongodb' # Assurez-vous que ce chemin existe sur les nœuds de votre cluster Kubernetes
+    path: '/mnt/data/mongodb' # Ensure this path exists on your Kubernetes nodes
 ---
+# PersistentVolumeClaim for MongoDB
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

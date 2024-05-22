@@ -1,3 +1,4 @@
+# HelmRelease for managing deployments
 apiVersion: apps/v1
 kind: HelmRelease
 metadata:
@@ -27,7 +28,6 @@ spec:
             value: redis
           - name: REDIS_PORT
             value: '6379'
-
     # Release for MongoDB
     - name: mongodb
       chart:
@@ -44,8 +44,7 @@ spec:
           - name: MONGO_INITDB_ROOT_USERNAME
             value: amine
           - name: MONGO_INITDB_ROOT_PASSWORD
-            value: Hamido123
-
+            value: Hamidou123
     # Release for Redis
     - name: redis
       chart:
