@@ -4,66 +4,65 @@ metadata:
   name: nestjs-mongodb-redis
 spec:
   releases:
-    # Release pour l'application Nest.js
+    # Release for Nest.js application
     - name: my-nest-app
       chart:
         repository: https://charts.example.com/stable
         name: my-nest-app
         version: 1.0.0
       values:
-        - name: my-nest-app
-          replicaCount: 3
-          image:
-            repository: backend-azure
-            tag: backend
-            pullPolicy: IfNotPresent
-          service:
-            name: my-nest-app-service
-            type: LoadBalancer
-            port: 3002
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              value: amine
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              value: Hamidou123
-            - name: MONGO_URI
-              value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-            - name: REDIS_HOST
-              value: redis
-            - name: REDIS_PORT
-              value: '6379'
+        replicaCount: 3
+        image:
+          repository: backend-azure
+          tag: backend
+          pullPolicy: IfNotPresent
+        service:
+          name: my-nest-app-service
+          type: LoadBalancer
+          port: 3002
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: amine
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: Hamidou123
+          - name: MONGO_URI
+            value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+          - name: REDIS_HOST
+            value: redis
+          - name: REDIS_PORT
+            value: '6379'
 
-    # Release pour MongoDB
+    # Release for MongoDB
     - name: mongodb
       chart:
         repository: https://charts.example.com/stable
         name: mongodb
         version: 1.0.0
       values:
-        - name: mongodb
-          replicaCount: 1
-          image:
-            repository: mongo
-            tag: latest
-            pullPolicy: IfNotPresent
-          env:
-            MONGO_INITDB_ROOT_USERNAME: admin
-            MONGO_INITDB_ROOT_PASSWORD: admin
+        replicaCount: 1
+        image:
+          repository: mongo
+          tag: latest
+          pullPolicy: IfNotPresent
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: admin
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: admin
 
-    # Release pour Redis
+    # Release for Redis
     - name: redis
       chart:
         repository: https://charts.example.com/stable
         name: redis
         version: 1.0.0
       values:
-        - name: redis
-          replicaCount: 1
-          image:
-            repository: redis
-            tag: latest
-            pullPolicy: IfNotPresent
-          service:
-            name: redis-service
-            type: ClusterIP
-            port: 6379
+        replicaCount: 1
+        image:
+          repository: redis
+          tag: latest
+          pullPolicy: IfNotPresent
+        service:
+          name: redis-service
+          type: ClusterIP
+          port: 6379
