@@ -13,8 +13,8 @@ spec:
       values:
         replicaCount: 3
         image:
-          repository: back
-          tag: backk-az
+          repository: mohamedamine1/backend
+          tag: backend-pfe
           pullPolicy: IfNotPresent
         service:
           name: my-nest-app-service
