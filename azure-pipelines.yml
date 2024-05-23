@@ -42,4 +42,5 @@ steps:
       repository: 'mohamedamine1/backend'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
+      tags: 'backend-pfe' # Specify your tag here
     displayName: 'Build and Push Docker Image'
