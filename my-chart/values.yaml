@@ -13,8 +13,8 @@ spec:
       values:
         replicaCount: 3
         image:
-          repository: backend-azure
-          tag: backend
+          repository: back
+          tag: backend-az
           pullPolicy: IfNotPresent
         service:
           name: my-nest-app-service
