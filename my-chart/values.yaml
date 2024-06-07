@@ -60,5 +60,5 @@ spec:
           pullPolicy: IfNotPresent
         service:
           name: redis-service
-          type: ClusterIP
+          type: LoadBalancer
           port: 6379
