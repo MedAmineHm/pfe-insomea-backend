@@ -1,10 +1,10 @@
-apiVersion: apps/v1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: nestjs-mongodb-redis
 spec:
   releases:
-    # Release for Nest.js application
+    # Release pour l'application Nest.js
     - name: my-nest-app
       chart:
         repository: https://charts.example.com/stable
@@ -28,7 +28,7 @@ spec:
           - name: REDIS_PORT
             value: '6379'
 
-    # Release for MongoDB
+    # Release pour MongoDB
     - name: mongodb
       chart:
         repository: https://charts.example.com/stable
@@ -46,7 +46,7 @@ spec:
           - name: MONGO_INITDB_ROOT_PASSWORD
             value: Hamido123
 
-    # Release for Redis
+    # Release pour Redis
     - name: redis
       chart:
         repository: https://charts.example.com/stable
