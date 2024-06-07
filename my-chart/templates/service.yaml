@@ -27,13 +27,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-service
+  name: redis
   labels:
     app: redis
-    argocd.argoproj.io/instance: back
 spec:
-  ports:
-    - port: 6379
-      targetPort: 6379
   selector:
     app: redis
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
