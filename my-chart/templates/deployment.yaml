@@ -19,7 +19,7 @@ spec:
         - name: my-nest-app
           image: mohamedamine1/backend:backend-pfe
           ports:
-            - containerPort: 3001
+            - containerPort: 3000
           env:
             - name: MONGO_URI
               value: 'mongodb://amine:Hamidou123@mongodb-service:27017/?retryWrites=true&w=majority&appName=Cluster0'
