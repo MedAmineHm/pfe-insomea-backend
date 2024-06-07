@@ -19,6 +19,7 @@ metadata:
 spec:
   selector:
     app: mongodb
+  type: LoadBalancer
   ports:
     - port: 27017
       targetPort: 27017
@@ -33,8 +34,8 @@ metadata:
 spec:
   selector:
     app: redis
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 6379
       targetPort: 6379
-  type: ClusterIP
