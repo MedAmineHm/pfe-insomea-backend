@@ -1,15 +1,15 @@
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: HelmRelease
 metadata:
   name: nestjs-mongodb-redis
 spec:
+  chart:
+    repository: https://charts.example.com/stable
+    version: 1.0.0
   releases:
     # Release for Nest.js application
     - name: my-nest-app
-      chart:
-        repository: https://charts.example.com/stable
-        name: my-nest-app
-        version: 1.0.0
+      chart: my-nest-app
       values:
         replicaCount: 3
         image:
@@ -19,7 +19,7 @@ spec:
         service:
           name: my-nest-app-service
           type: LoadBalancer
-          port: 3001
+          port: 80
         env:
           - name: MONGO_URI
             value: 'mongodb://amine:Hamidou123@mongodb-service:27017/?retryWrites=true&w=majority&appName=Cluster0'
@@ -30,10 +30,7 @@ spec:
 
     # Release for MongoDB
     - name: mongodb
-      chart:
-        repository: https://charts.example.com/stable
-        name: mongodb
-        version: 1.0.0
+      chart: mongodb
       values:
         replicaCount: 1
         image:
@@ -44,14 +41,11 @@ spec:
           - name: MONGO_INITDB_ROOT_USERNAME
             value: amine
           - name: MONGO_INITDB_ROOT_PASSWORD
-            value: Hamido123
+            value: Hamidou123
 
     # Release for Redis
     - name: redis
-      chart:
-        repository: https://charts.example.com/stable
-        name: redis
-        version: 1.0.0
+      chart: redis
       values:
         replicaCount: 1
         image:

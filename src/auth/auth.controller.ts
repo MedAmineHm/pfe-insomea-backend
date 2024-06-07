@@ -82,7 +82,9 @@ export class AuthController {
     };
     const token = await this.authService.signPayload(payload);
 
-    res.redirect(`http://57.152.61.64:3000/accept-google-auth?token=${token}`);
+    res.redirect(
+      `http://48.217.208.238:3000/accept-google-auth?token=${token}`,
+    );
   }
   @Post('forgot-password')
   async forgotPassword(@Body() forgotPasswordDTO: ForgotPasswordDTO) {
