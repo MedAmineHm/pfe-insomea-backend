@@ -29,7 +29,7 @@ export class AuthService {
 
     const resetToken = await this.generateResetToken(email);
 
-    const resetLink = `http://48.217.208.238:80/reset-password/:email?secret=${resetToken}`;
+    const resetLink = `http://48.217.208.238:3000/reset-password/:email?secret=${resetToken}`;
 
     // send the mail here ...
     const transporter = createTransport({
