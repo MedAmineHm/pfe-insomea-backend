@@ -6,7 +6,9 @@ async function bootstrap() {
 
   // Activer CORS pour toutes les routes
   app.enableCors({
-    origin: 'http://48.217.208.238:3000',
+    origin: 'http://48.217.208.238:3000', // Autorise les requêtes en provenance de votre application React
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes HTTP autorisées
+    allowedHeaders: ['Content-Type', 'Authorization'], // Headers autorisés
   });
 
   await app.listen(3001);
