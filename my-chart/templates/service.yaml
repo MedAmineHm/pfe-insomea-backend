@@ -7,7 +7,7 @@ spec:
     app: my-nest-app
   type: LoadBalancer
   ports:
-    - port: 3001
+    - port: 80
       targetPort: 3001
 
 ---
