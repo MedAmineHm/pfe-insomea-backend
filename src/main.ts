@@ -1,16 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as dotenv from 'dotenv';
+
+// Charger les variables d'environnement à partir de backend.env
+dotenv.config({ path: 'backend.env' });
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
-  // Activer CORS pour toutes les routes
   app.enableCors({
-    origin: 'http://48.217.208.238:3000', // Autorise les requêtes en provenance de votre application React
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes HTTP autorisées
-    allowedHeaders: ['Content-Type', 'Authorization'], // Headers autorisés
+    origin: true,
+    credentials: true,
   });
 
   await app.listen(3001);
 }
+
 bootstrap();
