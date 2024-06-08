@@ -20,7 +20,7 @@ spec:
     app: mongodb
   type: LoadBalancer
   ports:
-    - port: 27017
+    - port: 80
       targetPort: 27017
 
 ---
@@ -36,5 +36,5 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 6379
+      port: 80
       targetPort: 6379

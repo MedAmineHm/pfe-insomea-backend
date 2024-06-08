@@ -27,7 +27,7 @@ spec:
           - name: REDIS_HOST
             value: redis
           - name: REDIS_PORT
-            value: '6379'
+            value: '80'
 
     # Release pour MongoDB
     - name: mongodb
@@ -62,4 +62,5 @@ spec:
         service:
           name: redis-service
           type: LoadBalancer
-          port: 6379
+          port: 80
+          targetPort: 6379
