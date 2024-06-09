@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 import * as dotenv from 'dotenv';
 
-// Charger les variables d'environnement à partir de backend.env
+// Charger les variables d'environnement à
 dotenv.config({ path: 'backend.env' });
 
 @Injectable()
