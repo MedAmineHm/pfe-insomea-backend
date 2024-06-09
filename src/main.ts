@@ -16,7 +16,7 @@ async function bootstrap() {
   // Update the environment variables with the external IPs
   process.env.MONGO_URI =
     'mongodb://amine:Hamidou123@<EXTERNAL-IP-MONGODB>:27017/?retryWrites=true&w=majority&appName=Cluster0';
-  process.env.REDIS_HOST = '48.217.215.166';
+  process.env.REDIS_HOST = '48.217.216.116';
   process.env.REDIS_PORT = '6379';
 
   await app.listen(3001); // Écoute sur le port 3001 pour votre application Nest.js
