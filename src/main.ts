@@ -1,19 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as dotenv from 'dotenv';
-
-// Charger les variables d'environnement à partir de backend.env
-dotenv.config({ path: 'backend.env' });
+import * as cors from 'cors';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
 
-  app.enableCors({
-    origin: true,
-    credentials: true,
-  });
+  app.use(
+    cors({
+      origin: 'http://48.217.215.181:80', // Remplacez <EXTERNAL-IP-OF-REACT-APP> par l'IP externe ou le domaine
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
+    }),
+  );
 
   await app.listen(3001);
+  console.log('Server is running on port 3001');
 }
-
 bootstrap();
