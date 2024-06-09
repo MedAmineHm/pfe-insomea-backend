@@ -44,7 +44,10 @@ spec:
           - name: MONGO_INITDB_ROOT_USERNAME
             value: amine
           - name: MONGO_INITDB_ROOT_PASSWORD
-            value: Hamido123
+            value: Hamidou123
+        service:
+          type: LoadBalancer
+          port: 27017
 
     # Release pour Redis
     - name: redis
