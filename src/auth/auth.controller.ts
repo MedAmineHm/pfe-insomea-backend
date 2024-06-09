@@ -82,9 +82,7 @@ export class AuthController {
     };
     const token = await this.authService.signPayload(payload);
 
-    res.redirect(
-      `http://my-react-app-service/accept-google-auth?token=${token}`,
-    );
+    res.redirect(`http://57.152.64.133:80/accept-google-auth?token=${token}`);
   }
   @Post('forgot-password')
   async forgotPassword(@Body() forgotPasswordDTO: ForgotPasswordDTO) {
