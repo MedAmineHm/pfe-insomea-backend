@@ -7,19 +7,13 @@ async function bootstrap() {
 
   app.use(
     cors({
-      origin: 'http://48.217.208.238:80', // Remplacez par l'IP externe et le port de votre application React
+      origin: 'http://48.217.215.181:80', // Remplacez <EXTERNAL-IP-OF-REACT-APP> par l'IP externe ou le domaine
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      credentials: true, // Active l'échange de cookies cross-domain si nécessaire
+      credentials: true,
     }),
   );
 
-  // Update the environment variables with the external IPs
-  process.env.MONGO_URI =
-    'mongodb://amine:Hamidou123@<EXTERNAL-IP-MONGODB>:27017/?retryWrites=true&w=majority&appName=Cluster0';
-  process.env.REDIS_HOST = '48.217.216.116';
-  process.env.REDIS_PORT = '6379';
-
-  await app.listen(3001); // Écoute sur le port 3001 pour votre application Nest.js
+  await app.listen(3001);
   console.log('Server is running on port 3001');
 }
 bootstrap();
