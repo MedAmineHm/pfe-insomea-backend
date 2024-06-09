@@ -29,7 +29,7 @@ export class AuthService {
 
     const resetToken = await this.generateResetToken(email);
 
-    const resetLink = `http://57.152.83.86:80/reset-password/:email?secret=${resetToken}`;
+    const resetLink = `http://my-react-app-service/reset-password/:email?secret=${resetToken}`;
 
     // send the mail here ...
     const transporter = createTransport({
