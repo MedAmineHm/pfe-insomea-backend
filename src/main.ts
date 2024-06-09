@@ -7,7 +7,7 @@ async function bootstrap() {
 
   app.use(
     cors({
-      origin: 'http://48.217.215.181:80', // Remplacez <EXTERNAL-IP-OF-REACT-APP> par l'IP externe ou le domaine
+      origin: 'http://48.217.208.238:80', // Remplacez <EXTERNAL-IP-OF-REACT-APP> par l'IP externe ou le domaine
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       credentials: true,
     }),
