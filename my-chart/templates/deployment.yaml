@@ -31,7 +31,7 @@ spec:
             - name: GOOGLE_CLIENT_SECRET
               value: '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'
             - name: CALLBACK_URL
-              value: 'yyyhttp://57.152.98.72:3001/auth/google/callback'
+              value: 'http://57.152.98.72:3001/auth/google/callback'
 
 ---
 apiVersion: apps/v1
