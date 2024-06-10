@@ -26,6 +26,12 @@ spec:
               value: redis-service
             - name: REDIS_PORT
               value: '6379'
+            - name: GOOGLE_CLIENT_ID
+              value: '623979528383-p8aeifjjid4l73mqnc9bin88gr8hmckr.apps.googleusercontent.com'
+            - name: GOOGLE_CLIENT_SECRET
+              value: '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'
+            - name: CALLBACK_URL
+              value: 'yyyhttp://57.152.98.72:3001/auth/google/callback'
 
 ---
 apiVersion: apps/v1
