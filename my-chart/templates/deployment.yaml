@@ -26,6 +26,21 @@ spec:
               value: redis-service
             - name: REDIS_PORT
               value: '6379'
+            env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://amine:Hamidou123@cluster0.upvcmiw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+            - name: GOOGLE_CLIENT_ID
+              value: "623979528383-p8aeifjjid4l73mqnc9bin88gr8hmckr.apps.googleusercontent.com"
+            - name: GOOGLE_CLIENT_SECRET
+              value: "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"
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: SECRET_KEY
+              value: "test"
+            - name: CALLBACK_URL
+              value: "https://74b1-102-159-155-156.ngrok-free.app/auth/google/callback"
 
 ---
 apiVersion: apps/v1
