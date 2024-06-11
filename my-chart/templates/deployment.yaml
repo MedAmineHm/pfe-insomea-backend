@@ -27,11 +27,17 @@ spec:
             - name: REDIS_PORT
               value: '6379'
             - name: GOOGLE_CLIENT_ID
-              value: '567924367027-gutb1a9ru3iipj2v4n306nkm3nt39s4n.apps.googleusercontent.com'
+              valueFrom:
+                secretKeyRef:
+                  name: my-nest-app-secret
+                  key: GOOGLE_CLIENT_ID
             - name: GOOGLE_CLIENT_SECRET
-              value: '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'
+              valueFrom:
+                secretKeyRef:
+                  name: my-nest-app-secret
+                  key: GOOGLE_CLIENT_SECRET
             - name: CALLBACK_URL
-             value: 'http://www.mydomain.com:3001/auth/google/callback'
+              value: 'http://www.mydomain.com:3001/auth/google/callback'
 
 ---
 apiVersion: apps/v1

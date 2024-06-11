@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-nest-app-secret
+type: Opaque
+data:
+  GOOGLE_CLIENT_ID: '567924367027-gutb1a9ru3iipj2v4n306nkm3nt39s4n.apps.googleusercontent.com'
+  GOOGLE_CLIENT_SECRET: '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
+'
