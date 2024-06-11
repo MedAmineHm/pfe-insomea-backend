@@ -26,6 +26,8 @@ spec:
               value: redis-service
             - name: REDIS_PORT
               value: '6379'
+            - name: CALLBACK_URL
+              value: 'http://57.152.98.72:3001/auth/google/callback'
 
 ---
 apiVersion: apps/v1
