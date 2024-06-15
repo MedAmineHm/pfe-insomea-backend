@@ -36,7 +36,7 @@ export class AzureController {
 
   // GET: /azure/locations
   @Get('locations')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getAllLocations() {
     try {
       const locationsData = await this.azureService.getAllLocations();
@@ -47,9 +47,21 @@ export class AzureController {
     }
   }
 
+  // GET: /azure/locations/names
+  @Get('locations/names')
+  async getAllNames() {
+    try {
+      const locationsNamesData = await this.azureService.getAllLocationsNames();
+      return { success: true, data: locationsNamesData };
+    } catch (e) {
+      console.log(e);
+      throw new HttpException('An error has occurred', 404);
+    }
+  }
+
   // GET: /azure/locations
   @Get('locations/:name')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getLocationByName(@Param('name') name: string) {
     try {
       const locationData = await this.azureService.getLocationByName(name);
@@ -121,7 +133,7 @@ export class AzureController {
 
   // GET: /azure/vm-sizes/
   @Get('vm-sizes')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getAllVmSizes() {
     try {
       const vmSizesFull = await this.azureService.getAllVmSizes();
@@ -133,7 +145,7 @@ export class AzureController {
   }
 
   @Get('vm-sizes/:locationName')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getVmSizesByLocation(
     @Param('locationName') locationName: string,
     @Query(VmSizesPipe) query: GetVmSizesDto,
@@ -144,6 +156,17 @@ export class AzureController {
         query,
       );
       return { success: true, data: vmSizes };
+    } catch (e) {
+      console.error(e);
+      throw new HttpException('An error has occurred', 401);
+    }
+  }
+
+  @Get('vm-sizes/:locationName/options')
+  async getLocalVmSizesOptions(@Param('locationName') locationName: string) {
+    try {
+      const options = await this.azureService.getLocationOptions(locationName);
+      return { success: true, data: options };
     } catch (e) {
       console.error(e);
       throw new HttpException('An error has occurred', 401);

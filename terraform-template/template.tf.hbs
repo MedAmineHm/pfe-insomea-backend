@@ -1,0 +1,21 @@
+provider "azurerm" { features {} }
+
+{{#if resources}}
+  {{#each resources}}
+    resource "azurerm_resource_group" "{{resource_name}}" { name = "{{name}}"
+    location = "{{location}}" }
+
+  {{/each}}
+{{/if}}
+
+{{#if resources}}
+  {{#each vnets}}
+    resource "azurerm_virtual_network" "{{resource_name}}" { name = "{{name}}"
+    address_space = ["10.0.0.0/16"] location =
+    {{location}}
+    resource_group_name =
+    {{resource_group_name}}
+    }
+
+  {{/each}}
+{{/if}}

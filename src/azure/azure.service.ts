@@ -6,7 +6,7 @@ import { Location } from 'src/schemas/Location.schema';
 import { executeCommand, validLocationsNames } from 'src/utils';
 import { GetImagesDto } from './dtos/GetImages.dto';
 import { VmSize } from 'src/schemas/VmSize.schema';
-import { filter, includes, isEmpty, reduce, whereEq } from 'ramda';
+import { filter, includes, isEmpty, reduce, sort, whereEq } from 'ramda';
 import { GetVmSizesDto } from './dtos/GetVmSizes.dto';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
@@ -35,7 +35,7 @@ export class AzureService {
 
     // delete all locations if exists:
     await this.locationModel.deleteMany({});
-    // insert new locations:
+    // inset new locations:
     const savedLocations = await this.locationModel.insertMany(validLocations);
     // setting locations to cache
     await this.cacheManager.set('azure-locations', savedLocations);
@@ -49,6 +49,21 @@ export class AzureService {
     const locations = await this.locationModel.find();
     await this.cacheManager.set('azure-locations', locations);
     return locations;
+  }
+
+  async getAllLocationsNames() {
+    let locations: Array<any> = await this.cacheManager.get('azure-locations');
+    if (!locations) locations = await this.locationModel.find();
+
+    const locationNames = reduce(
+      (acc: Array<any>, location: any) => [...acc, location.displayName],
+      [],
+    )(locations);
+
+    const diff = function (a: any, b: any) {
+      return a - b;
+    };
+    return sort(diff, locationNames);
   }
 
   async getLocationByName(name: string) {
@@ -160,5 +175,52 @@ export class AzureService {
       );
 
     return { location: locationName, options: localVmSizesOptionsFiltered };
+  }
+
+  async getLocationOptions(locationName: string) {
+    let vmSizeCache = await this.cacheManager.get(
+      `azure-vm-sizes-${locationName}`,
+    );
+
+    if (!vmSizeCache) {
+      const localVmSizes = await this.vmSizeModel.findOne({
+        location: locationName,
+      });
+      await this.cacheManager.set(
+        `azure-vm-sizes-${locationName}`,
+        localVmSizes,
+      );
+      vmSizeCache = localVmSizes;
+    }
+
+    const maxDataDiskCountOptions = new Set();
+    const memoryInMBOptions = new Set();
+    const numberOfCoresOptions = new Set();
+    const osDiskSizeInMBOptions = new Set();
+    const resourceDiskSizeInMBOptions = new Set();
+
+    // @ts-expect-error: Unreachable code error
+
+    vmSizeCache.options.forEach((option: any) => {
+      maxDataDiskCountOptions.add(option.maxDataDiskCount);
+      memoryInMBOptions.add(option.memoryInMB);
+      numberOfCoresOptions.add(option.memoryInMB);
+      osDiskSizeInMBOptions.add(option.osDiskSizeInMB);
+      resourceDiskSizeInMBOptions.add(option.resourceDiskSizeInMB);
+    });
+
+    const diff = function (a: any, b: any) {
+      return a - b;
+    };
+
+    const options = {
+      maxDataDiskCount: sort(diff, Array.from(maxDataDiskCountOptions)),
+      memoryInMB: sort(diff, Array.from(memoryInMBOptions)),
+      numberOfCores: sort(diff, Array.from(numberOfCoresOptions)),
+      osDiskSizeInMB: sort(diff, Array.from(osDiskSizeInMBOptions)),
+      resourceDiskSizeInMB: sort(diff, Array.from(resourceDiskSizeInMBOptions)),
+    };
+
+    return { options };
   }
 }
