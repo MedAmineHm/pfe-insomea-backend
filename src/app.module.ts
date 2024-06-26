@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { TerraformModule } from './terraform/terraform.module';
+import { BoardModule } from './board/board.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TerraformModule } from './terraform/terraform.module';
     UserModule,
     AuthModule,
     TerraformModule,
+    BoardModule,
   ],
 })
 export class AppModule {}

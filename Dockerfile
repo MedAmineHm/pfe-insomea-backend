@@ -1,54 +1,29 @@
-###################
-# BUILD FOR LOCAL DEVELOPMENT
-###################
+# Utilisation d'une image de base Node.js avec version spécifique
+FROM node:20
 
-FROM node:18-alpine AS development
+# Création du répertoire de travail de l'application
+WORKDIR /app
 
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json to install dependencies
+# Copie du fichier package.json et package-lock.json (le cas échéant)
 COPY package*.json ./
-RUN npm ci
+
+# Installation des dépendances
+RUN npm install
+
+# Installation d'Azure CLI
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+# Installation d'Infracost
+RUN curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+
+# Ajout du chemin d'Infracost au PATH
+ENV PATH="/usr/local/bin:${PATH}"
+
+# Copie du reste des fichiers de l'application
 COPY . .
 
-COPY backend.env ./
+# Exposition du port si nécessaire
+EXPOSE 3001
 
-USER node
-
-###################
-# BUILD FOR PRODUCTION
-###################
-
-FROM node:18-alpine AS build
-
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json
-COPY package*.json ./
-# Copy the source code and install dependencies
-COPY . .
-# Install dependencies and build the project
-RUN npm ci
-RUN npm run build
-
-ENV NODE_ENV production
-
-# Reinstall node_modules with production dependencies and rebuild native modules
-RUN npm ci --only=production && npm rebuild bcrypt && npm cache clean --force
-
-USER node
-
-###################
-# PRODUCTION
-###################
-
-FROM node:18-alpine AS production
-
-WORKDIR /usr/src/app
-
-# Copy only the necessary files from the build stage
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/dist ./dist
-COPY backend.env ./
-
-CMD [ "node", "dist/main.js" ]
+# Commande par défaut pour démarrer l'application
+CMD [ "npm", "start" ]
