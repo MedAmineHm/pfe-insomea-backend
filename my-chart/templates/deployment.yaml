@@ -26,14 +26,6 @@ spec:
               value: redis-service
             - name: REDIS_PORT
               value: '6379'
-          resources:
-            requests:
-              memory: '200Mi'
-              cpu: '100m'
-            limits:
-              memory: '500Mi'
-              cpu: '200m'
-          imagePullPolicy: Always
 
 ---
 apiVersion: apps/v1
@@ -92,14 +84,6 @@ spec:
           image: redis:latest
           ports:
             - containerPort: 6379
-          resources:
-            requests:
-              memory: '200Mi'
-              cpu: '100m'
-            limits:
-              memory: '500Mi'
-              cpu: '200m'
-          imagePullPolicy: Always
 
 ---
 apiVersion: apps/v1
@@ -123,11 +107,3 @@ spec:
           image: mohamedamine1/frontend:frontend-pfe
           ports:
             - containerPort: 3000
-          resources:
-            requests:
-              memory: '200Mi'
-              cpu: '100m'
-            limits:
-              memory: '500Mi'
-              cpu: '200m'
-          imagePullPolicy: Always
