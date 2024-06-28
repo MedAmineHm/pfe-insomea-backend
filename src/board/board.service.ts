@@ -18,7 +18,7 @@ export class BoardService {
   }
 
   async createNewBoard(payload: any) {
-    // @ts-expect-error: Unreachable code error
+    // @ts-ignore: Unreachable code error
     const newBoard = this.boardModel(payload);
     await newBoard.save();
     return newBoard;

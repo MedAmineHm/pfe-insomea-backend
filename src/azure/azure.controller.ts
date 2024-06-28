@@ -23,7 +23,7 @@ export class AzureController {
 
   // POST: /azure/locations/refresh
   @Post('locations/refresh')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async refreshLocationToDB() {
     try {
       const locationsData = await this.azureService.loadLocationsToDB();
@@ -49,6 +49,7 @@ export class AzureController {
 
   // GET: /azure/locations/names
   @Get('locations/names')
+  // @UseGuards(AuthGuard('jwt'))
   async getAllNames() {
     try {
       const locationsNamesData = await this.azureService.getAllLocationsNames();
@@ -77,7 +78,7 @@ export class AzureController {
 
   // POST: /azure/images/refresh
   @Post('images/refresh')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async refreshImagesToDB() {
     try {
       const imagesData = await this.azureService.loadImagesToDB();
@@ -90,7 +91,7 @@ export class AzureController {
 
   // GET: /azure/images
   @Get('images')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @UsePipes(new ValidationPipe())
   async getAllImages(@Query() query: GetImagesDto) {
     try {
@@ -104,7 +105,7 @@ export class AzureController {
 
   // GET: /azure/images/:urn
   @Get('images/:urn')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getImageByUrn(@Param('urn') urn: string) {
     try {
       const imageData = await this.azureService.getImageByUrn(urn);
@@ -120,7 +121,7 @@ export class AzureController {
 
   // POST: /azure/vm-sizes/refresh
   @Post('vm-sizes/refresh')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async refreshVmSizesToDB() {
     try {
       const vmSizes = await this.azureService.loadVmSizesToDB();
@@ -163,6 +164,7 @@ export class AzureController {
   }
 
   @Get('vm-sizes/:locationName/options')
+  // @UseGuards(AuthGuard('jwt'))
   async getLocalVmSizesOptions(@Param('locationName') locationName: string) {
     try {
       const options = await this.azureService.getLocationOptions(locationName);

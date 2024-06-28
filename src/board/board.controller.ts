@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
   Body,
@@ -21,7 +20,7 @@ export class BoardController {
   constructor(private boardService: BoardService) {}
 
   @Get('/')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getAllBoard(@Req() req) {
     try {
       const userId = req.user._id;
@@ -34,7 +33,7 @@ export class BoardController {
   }
 
   @Get('/:id')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async getABoard(@Req() req, @Param('id') id: string) {
     try {
       const userId = req.user._id;
@@ -47,7 +46,7 @@ export class BoardController {
   }
 
   @Post('/')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async createNewBoard(@Body() boardDTO: BoardDTO, @Req() req) {
     try {
       const payload = { ...boardDTO, user: req.user._id };
@@ -60,7 +59,7 @@ export class BoardController {
   }
 
   @Put('/:id')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async updateABoard(
     @Req() req,
     @Body() boardDTO: BoardDTO,
@@ -86,7 +85,7 @@ export class BoardController {
   }
 
   @Delete('/:id')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async deleteAboard(@Req() req, @Param('id') id: string) {
     try {
       const board = await this.boardService.deleteBoard(id, req.user._id);

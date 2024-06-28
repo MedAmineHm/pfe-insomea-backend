@@ -4,6 +4,6 @@ import { TerraformService } from './terraform.service';
 
 @Module({
   controllers: [TerraformController],
-  providers: [TerraformService],
+  providers: [TerraformService]
 })
 export class TerraformModule {}
