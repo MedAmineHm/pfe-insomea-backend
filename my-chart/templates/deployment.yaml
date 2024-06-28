@@ -65,14 +65,6 @@ spec:
           volumeMounts:
             - name: mongodb-storage
               mountPath: /data/db
-          resources:
-            requests:
-              memory: '200Mi'
-              cpu: '100m'
-            limits:
-              memory: '500Mi'
-              cpu: '200m'
-          imagePullPolicy: Always
       volumes:
         - name: mongodb-storage
           persistentVolumeClaim:
