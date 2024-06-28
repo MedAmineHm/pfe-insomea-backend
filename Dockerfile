@@ -6,7 +6,6 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 RUN curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
 
