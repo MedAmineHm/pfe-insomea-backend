@@ -4,6 +4,8 @@ import * as path from 'path';
 import { promisify } from 'util';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+import { executeCommand } from 'src/utils';
+const fse = require('fs-extra');
 
 @Injectable()
 export class TerraformService {
@@ -17,7 +19,6 @@ export class TerraformService {
     }
   }
 
-  // ============= Generate Terraform Code =================
   async generateTerraformCode(data: any) {
     const filePath = path.join(
       process.cwd(),
@@ -30,16 +31,38 @@ export class TerraformService {
     return output;
   }
 
-  // ============= Terraform Code Cost ====================
   async terraformCodeCost(data: any) {
     const output = await this.generateTerraformCode(data);
 
     // generate .tf file
     const folderName = uuidv4();
-    const filePath = path.join('./terraform-code', 'main.tf');
+    const folderPath = `./terraform-codes/${folderName}`;
+    const filePath = path.join(folderPath, 'main.tf');
+    fse.outputFileSync(filePath, output);
 
-    fs.writeFileSync(`./tt/main.tf`, output);
+    try {
+      // Ensure directory exists
+      fse.ensureDirSync(folderPath);
 
-    return output;
+      // Execute Infracost command
+      const command = `cd ${folderPath} && infracost breakdown --path . --out-file output.txt`;
+      executeCommand(command);
+
+      // Ensure output.txt file exists
+      const outputFilePath = `${folderPath}/output.txt`;
+      if (fs.existsSync(outputFilePath)) {
+        const fileOutput = fs.readFileSync(outputFilePath, 'utf-8');
+
+        // Delete the generated folder
+        fse.removeSync(folderPath);
+
+        return fileOutput;
+      } else {
+        throw new Error(`Output file ${outputFilePath} not found.`);
+      }
+    } catch (err) {
+      console.error('Error processing Terraform cost:', err);
+      return null;
+    }
   }
 }
