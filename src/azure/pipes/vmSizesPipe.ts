@@ -1,8 +1,8 @@
-import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
+import { Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
 export class VmSizesPipe implements PipeTransform {
-  transform(options: any, metadata: ArgumentMetadata) {
+  transform(options: any) {
     const {
       maxDataDiskCount,
       memoryInMB,

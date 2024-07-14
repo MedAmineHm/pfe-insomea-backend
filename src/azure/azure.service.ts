@@ -199,7 +199,7 @@ export class AzureService {
     const osDiskSizeInMBOptions = new Set();
     const resourceDiskSizeInMBOptions = new Set();
 
-    // @ts-ignore: Unreachable code error
+    // @ts-expect-error: Unreachable code error
     vmSizeCache.options.forEach((option: any) => {
       maxDataDiskCountOptions.add(option.maxDataDiskCount.toString());
       memoryInMBOptions.add(option.memoryInMB.toString());

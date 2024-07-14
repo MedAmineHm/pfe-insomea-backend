@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
   Body,
@@ -9,8 +10,10 @@ import {
   Post,
   Put,
   Req,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   UseGuards,
 } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AuthGuard } from '@nestjs/passport';
 import { BoardDTO } from 'src/user/dtos/board.dto';
 import { BoardService } from './board.service';

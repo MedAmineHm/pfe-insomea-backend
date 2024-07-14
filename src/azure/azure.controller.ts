@@ -5,7 +5,6 @@ import {
   Param,
   Post,
   Query,
-  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -13,7 +12,6 @@ import { AzureService } from './azure.service';
 import { GetImagesDto } from './dtos/GetImages.dto';
 import { GetVmSizesDto } from './dtos/GetVmSizes.dto';
 import { VmSizesPipe } from './pipes/vmSizesPipe';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('azure')
 export class AzureController {

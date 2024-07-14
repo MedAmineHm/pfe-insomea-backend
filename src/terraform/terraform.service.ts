@@ -5,7 +5,7 @@ import { promisify } from 'util';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { executeCommand } from 'src/utils';
-const fse = require('fs-extra');
+import fse from 'fs-extra';
 
 @Injectable()
 export class TerraformService {
@@ -19,6 +19,7 @@ export class TerraformService {
     }
   }
 
+  // ============= Generate Terraform Code =================
   async generateTerraformCode(data: any) {
     const filePath = path.join(
       process.cwd(),
@@ -31,6 +32,7 @@ export class TerraformService {
     return output;
   }
 
+  // ============= Terraform Code Cost ====================
   async terraformCodeCost(data: any) {
     const output = await this.generateTerraformCode(data);
 
@@ -40,28 +42,22 @@ export class TerraformService {
     const filePath = path.join(folderPath, 'main.tf');
     fse.outputFileSync(filePath, output);
 
+    executeCommand(
+      `cd ${folderPath} && infracost breakdown --path . --out-file output.txt && sed -i 's/\x1b\[[0-9;]*m//g' output.txt`,
+    );
+
     try {
-      // Ensure directory exists
-      fse.ensureDirSync(folderPath);
-
-      // Execute Infracost command
-      const command = `cd ${folderPath} && infracost breakdown --path . --out-file output.txt`;
-      executeCommand(command);
-
-      // Ensure output.txt file exists
       const outputFilePath = `${folderPath}/output.txt`;
-      if (fs.existsSync(outputFilePath)) {
-        const fileOutput = fs.readFileSync(outputFilePath, 'utf-8');
 
-        // Delete the generated folder
-        fse.removeSync(folderPath);
+      // Read the file synchronously
+      const fileOutput = fs.readFileSync(outputFilePath, 'utf-8');
 
-        return fileOutput;
-      } else {
-        throw new Error(`Output file ${outputFilePath} not found.`);
-      }
+      // delete the generated file
+      fse.removeSync(folderPath);
+
+      return fileOutput;
     } catch (err) {
-      console.error('Error processing Terraform cost:', err);
+      console.error('Error reading file:', err);
       return null;
     }
   }
