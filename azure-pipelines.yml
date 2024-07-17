@@ -13,13 +13,24 @@ steps:
   - script: |
       npm install -g @nestjs/cli
       npm install
+    displayName: 'npm install'
+
+  - script: |
       npm run build
-    displayName: 'npm install and build'
+    displayName: 'Build Project'
+
+  - script: |
+      npm test -- --coverage
+    displayName: 'Run Unit Tests'
+    continueOnError: true
 
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'JUnit'
-      testResultsFiles: '**/TEST-*.xml'
+      testResultsFiles: 'coverage/test-results.xml'
+      failTaskOnFailedTests: true
+    condition: succeededOrFailed()
+    displayName: 'Publish Test Results'
 
   - task: ArchiveFiles@2
     inputs:
