@@ -20,7 +20,7 @@ steps:
     displayName: 'Build Project'
 
   - script: |
-      npm test -- --coverage
+      npm test -- --coverage --config jest.config.js
     displayName: 'Run Unit Tests'
     continueOnError: true
 
