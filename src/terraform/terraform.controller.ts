@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  HttpException,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, HttpException, Post } from '@nestjs/common';
 import { TerraformService } from './terraform.service';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('terraform')
 export class TerraformController {

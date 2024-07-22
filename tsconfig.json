@@ -5,6 +5,7 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "target": "es2017",
@@ -18,6 +19,16 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "jest.config.js", // Add this line
+    "src/terraform/terraform.controller.spec.ts",
+    "src/terraform/terraform.service.spec.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

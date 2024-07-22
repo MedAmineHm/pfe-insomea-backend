@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="9" failures="2" errors="0" time="6.945">
+  <testsuite name="TerraformController" errors="0" failures="0" skipped="0" timestamp="2024-07-22T00:30:40" time="4.519" tests="4">
+    <testcase classname="TerraformController generateTerraformCode should return generated Terraform code" name="TerraformController generateTerraformCode should return generated Terraform code" time="0.021">
+    </testcase>
+    <testcase classname="TerraformController generateTerraformCode should handle errors and throw HttpException" name="TerraformController generateTerraformCode should handle errors and throw HttpException" time="0.022">
+    </testcase>
+    <testcase classname="TerraformController terraformInfrastuctureCost should return Terraform infrastructure cost" name="TerraformController terraformInfrastuctureCost should return Terraform infrastructure cost" time="0.003">
+    </testcase>
+    <testcase classname="TerraformController terraformInfrastuctureCost should handle errors and throw HttpException" name="TerraformController terraformInfrastuctureCost should handle errors and throw HttpException" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="TerraformService" errors="0" failures="2" skipped="0" timestamp="2024-07-22T00:30:40" time="4.531" tests="5">
+    <testcase classname="TerraformService readFile should read file content" name="TerraformService readFile should read file content" time="0.024">
+      <failure>Error: expect(received).resolves.toBe()
+
+Received promise rejected instead of resolved
+Rejected to value: [Error: Error reading file: ENOENT: no such file or directory, open &apos;C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\test\file\path&apos;]
+    at expect (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\expect\build\index.js:113:15)
+    at Object.&lt;anonymous&gt; (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\src\terraform\terraform.service.spec.ts:42:13)
+    at Promise.then.completed (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:121:9)
+    at run (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-runner\build\runTest.js:444:34)
+    at Object.worker (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="TerraformService readFile should throw an error if reading the file fails" name="TerraformService readFile should throw an error if reading the file fails" time="0.019">
+      <failure>Error: expect(received).rejects.toThrow(expected)
+
+Expected substring: &quot;Error reading file: Test error&quot;
+Received message:   &quot;Error reading file: ENOENT: no such file or directory, open &apos;C:\\Users\\HAMIDOU\\Desktop\\pfe\\platform azure\\backend\\test\\file\\path&apos;&quot;
+
+      16 |       return fileContent;
+      17 |     } catch (err) {
+    &gt; 18 |       throw new Error(`Error reading file: ${err.message}`);
+         |             ^
+      19 |     }
+      20 |   }
+      21 |
+
+      at TerraformService.readFile (src/terraform/terraform.service.ts:18:13)
+      at Object.&lt;anonymous&gt; (src/terraform/terraform.service.spec.ts:51:7)
+    at Object.toThrow (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\expect\build\index.js:218:22)
+    at Object.&lt;anonymous&gt; (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\src\terraform\terraform.service.spec.ts:51:56)
+    at Promise.then.completed (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:121:9)
+    at run (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-runner\build\runTest.js:444:34)
+    at Object.worker (C:\Users\HAMIDOU\Desktop\pfe\platform azure\backend\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="TerraformService generateTerraformCode should generate Terraform code" name="TerraformService generateTerraformCode should generate Terraform code" time="0.003">
+    </testcase>
+    <testcase classname="TerraformService terraformCodeCost should generate Terraform code and compute cost" name="TerraformService terraformCodeCost should generate Terraform code and compute cost" time="0.003">
+    </testcase>
+    <testcase classname="TerraformService terraformCodeCost should handle errors while computing cost" name="TerraformService terraformCodeCost should handle errors while computing cost" time="0.003">
+    </testcase>
+  </testsuite>
+</testsuites>
