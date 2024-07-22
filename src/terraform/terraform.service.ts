@@ -4,8 +4,8 @@ import * as path from 'path';
 import { promisify } from 'util';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-import { executeCommand } from 'src/utils';
 import fse from 'fs-extra';
+import { executeCommand } from 'src/utils';
 
 @Injectable()
 export class TerraformService {

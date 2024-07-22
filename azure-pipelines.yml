@@ -11,13 +11,12 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      npm install -g @nestjs/cli
       npm install
       npm run build
-    displayName: 'npm install and build'
+    displayName: 'Install Dependencies and Build'
 
   - script: |
-      npm test -- --ci --reporters=default --reporters=jest-junit --config=jest.config.js
+      npm test -- --config=jest.config.js
     displayName: 'Run Unit Tests'
     continueOnError: true
 
@@ -51,5 +50,5 @@ steps:
       repository: 'mohamedamine1/backend'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
-      tags: 'backend-pfe' # Specify your tag here
+      tags: 'backend-pfe'
     displayName: 'Build and Push Docker Image'
