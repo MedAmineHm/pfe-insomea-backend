@@ -9,7 +9,6 @@ export class TerraformController {
 
   // POST: /terraform/generate
   @Post('generate')
-  // @UseGuards(AuthGuard('jwt'))
   async generateTerraformCode(@Body('data') data: string) {
     try {
       const parsedData = JSON.parse(data);
@@ -24,7 +23,6 @@ export class TerraformController {
 
   // COST: /terraform/cost
   @Post('cost')
-  // @UseGuards(AuthGuard('jwt'))
   async terraformInfrastuctureCost(@Body('data') data: string) {
     try {
       const parsedData = JSON.parse(data);

@@ -1,9 +1,13 @@
-import { HttpException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import { TerraformController } from './terraform.controller';
 import { TerraformService } from './terraform.service';
-import { Test, TestingModule } from '@nestjs/testing';
+import { HttpException } from '@nestjs/common';
 
-jest.mock('./terraform.service');
+// Mock TerraformService
+const mockTerraformService = {
+  generateTerraformCode: jest.fn(),
+  terraformCodeCost: jest.fn(),
+};
 
 describe('TerraformController', () => {
   let controller: TerraformController;
@@ -12,58 +16,87 @@ describe('TerraformController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TerraformController],
-      providers: [TerraformService],
+      providers: [
+        { provide: TerraformService, useValue: mockTerraformService },
+      ],
     }).compile();
 
     controller = module.get<TerraformController>(TerraformController);
     service = module.get<TerraformService>(TerraformService);
   });
 
-  describe('generateTerraformCode', () => {
-    it('should return generated Terraform code', async () => {
-      const data = JSON.stringify({ key: 'value' });
-      const terraformCode = 'generated terraform code';
+  // Suppression temporaire des sorties console
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
 
-      jest
-        .spyOn(service, 'generateTerraformCode')
-        .mockResolvedValue(terraformCode);
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('generateTerraformCode', () => {
+    it('should return a successful response with generated terraform code', async () => {
+      const data = JSON.stringify({ key: 'value' });
+      const terraformCode = 'terraform code';
+      (
+        mockTerraformService.generateTerraformCode as jest.Mock
+      ).mockResolvedValue(terraformCode);
 
       const result = await controller.generateTerraformCode(data);
       expect(result).toEqual({ success: true, data: terraformCode });
     });
 
-    it('should handle errors and throw HttpException', async () => {
+    it('should throw an HttpException on error', async () => {
       const data = JSON.stringify({ key: 'value' });
-      const error = new Error('Test error');
-
-      jest.spyOn(service, 'generateTerraformCode').mockRejectedValue(error);
+      const errorMessage = 'Error';
+      (
+        mockTerraformService.generateTerraformCode as jest.Mock
+      ).mockRejectedValue(new Error(errorMessage));
+      const consoleErrorSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       await expect(controller.generateTerraformCode(data)).rejects.toThrow(
         new HttpException('An error has occured.', 422),
       );
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ message: errorMessage }),
+      );
+
+      consoleErrorSpy.mockRestore();
     });
   });
 
   describe('terraformInfrastuctureCost', () => {
-    it('should return Terraform infrastructure cost', async () => {
+    it('should return a successful response with terraform cost', async () => {
       const data = JSON.stringify({ key: 'value' });
-      const costOutput = 'cost details';
-
-      jest.spyOn(service, 'terraformCodeCost').mockResolvedValue(costOutput);
+      const terraformCost = { cost: 100 };
+      (mockTerraformService.terraformCodeCost as jest.Mock).mockResolvedValue(
+        terraformCost,
+      );
 
       const result = await controller.terraformInfrastuctureCost(data);
-      expect(result).toEqual({ success: true, data: costOutput });
+      expect(result).toEqual({ success: true, data: terraformCost });
     });
 
-    it('should handle errors and throw HttpException', async () => {
+    it('should throw an HttpException on error', async () => {
       const data = JSON.stringify({ key: 'value' });
-      const error = new Error('Test error');
-
-      jest.spyOn(service, 'terraformCodeCost').mockRejectedValue(error);
+      const errorMessage = 'Error';
+      (mockTerraformService.terraformCodeCost as jest.Mock).mockRejectedValue(
+        new Error(errorMessage),
+      );
+      const consoleErrorSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       await expect(controller.terraformInfrastuctureCost(data)).rejects.toThrow(
         new HttpException('An error has occured', 422),
       );
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ message: errorMessage }),
+      );
+
+      consoleErrorSpy.mockRestore();
     });
   });
 });
