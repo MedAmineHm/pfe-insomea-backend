@@ -17,7 +17,7 @@ steps:
     displayName: 'npm install and build'
 
   - script: |
-      npm test -- --ci --reporters=default --reporters=jest-junit
+      npm test -- --ci --reporters=default --reporters=jest-junit --config=jest.config.js
     displayName: 'Run Unit Tests'
     continueOnError: true
 
