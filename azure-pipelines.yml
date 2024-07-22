@@ -16,10 +16,18 @@ steps:
       npm run build
     displayName: 'npm install and build'
 
+  - script: |
+      npm test -- --ci --reporters=default --reporters=jest-junit
+    displayName: 'Run Unit Tests'
+    continueOnError: true
+
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'JUnit'
       testResultsFiles: '**/TEST-*.xml'
+      failTaskOnFailedTests: false
+    condition: succeededOrFailed()
+    displayName: 'Publish Test Results'
 
   - task: ArchiveFiles@2
     inputs:
@@ -28,6 +36,7 @@ steps:
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
+    displayName: 'Archive Files'
 
   - task: PublishBuildArtifacts@1
     inputs:
