@@ -4,7 +4,7 @@ metadata:
   name: nestjs-mongodb-redis-reactjs
 spec:
   releases:
-    # Release pour l'application Nest.js
+    # Release pour l'application Nest
     - name: my-nest-app
       chart:
         repository: https://charts.example.com/stable
