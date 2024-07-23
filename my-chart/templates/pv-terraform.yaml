@@ -6,7 +6,8 @@ spec:
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteMany # Assurez-vous que ce mode correspond à ce que vous avez défini dans le PVC
   hostPath:
-    path: /mnt/data/terraform # Assurez-vous que ce chemin existe sur vos nœuds Kubernetes
+    path: /mnt/data/terraform # Assurez-vous que ce chemin existe sur vos nœuds
   storageClassName: manual
+  volumeMode: Filesystem
