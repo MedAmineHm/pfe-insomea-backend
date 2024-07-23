@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,21 +26,6 @@ spec:
               value: redis-service
             - name: REDIS_PORT
               value: '6379'
-            - name: AZURE_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: azure-credentials
-                  key: AZURE_CLIENT_ID
-            - name: AZURE_TENANT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: azure-credentials
-                  key: AZURE_TENANT_ID
-            - name: AZURE_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: azure-credentials
-                  key: AZURE_CLIENT_SECRET
 
 ---
 apiVersion: apps/v1
