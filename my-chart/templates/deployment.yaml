@@ -28,7 +28,7 @@ spec:
               value: '6379'
           volumeMounts:
             - name: terraform-code
-              mountPath: ./terraform-codes
+              mountPath: /terraform-codes/${folderName}
         - name: infracost
           image: infracost/infracost:latest
           command: ['sh', '-c', 'sleep infinity'] # Keeps the container running for command execution
@@ -40,7 +40,7 @@ spec:
                   key: api-key
           volumeMounts:
             - name: terraform-code
-              mountPath: ./terraform-codes
+              mountPath: /terraform-codes/${folderName}
       volumes:
         - name: terraform-code
           emptyDir: {}
