@@ -28,7 +28,19 @@ spec:
               value: '6379'
           volumeMounts:
             - name: terraform-code
-              mountPath: /app/terraform-codes
+              mountPath: ./terraform-codes
+        - name: infracost
+          image: infracost/infracost:latest
+          command: ['sh', '-c', 'sleep infinity'] # Keeps the container running for command execution
+          env:
+            - name: INFRACOST_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: infracost-secrets
+                  key: api-key
+          volumeMounts:
+            - name: terraform-code
+              mountPath: ./terraform-codes
       volumes:
         - name: terraform-code
           emptyDir: {}
@@ -113,37 +125,3 @@ spec:
           image: mohamedamine1/frontend:frontend-pfe
           ports:
             - containerPort: 3000
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: infracost
-  labels:
-    app: infracost
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: infracost
-  template:
-    metadata:
-      labels:
-        app: infracost
-    spec:
-      containers:
-        - name: infracost
-          image: infracost/infracost:latest
-          command: ['sh', '-c', 'sleep infinity']
-          env:
-            - name: INFRACOST_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: infracost-secrets
-                  key: api-key
-          volumeMounts:
-            - name: terraform-code
-              mountPath: /app/terraform-codes
-      volumes:
-        - name: terraform-code
-          emptyDir: {}
