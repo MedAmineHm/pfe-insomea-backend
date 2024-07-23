@@ -7,11 +7,7 @@ pool:
 steps:
   - task: NodeTool@0
     inputs:
-<<<<<<< HEAD
       versionSpec: '16.x' # Update to Node.js 16.x or higher
-=======
-      versionSpec: '16.x'  # Update to Node.js 16.x or higher
->>>>>>> d4ade03e7b404c22d791479a2b4a7f3546dd5e57
     displayName: 'Install Node.js'
 
   - script: |
