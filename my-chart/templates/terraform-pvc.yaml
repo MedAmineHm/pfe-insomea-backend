@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: infracost-pvc
+  name: terraform-pvc
 spec:
   accessModes:
     - ReadWriteMany
