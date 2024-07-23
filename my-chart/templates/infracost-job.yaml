@@ -12,7 +12,7 @@ spec:
             [
               'sh',
               '-c',
-              'infracost breakdown --path=/terraform-codes/terraform --format=json --out-file=/data/infracost.json',
+              'infracost breakdown --path=/terraform-codes --format=json --out-file=/data/infracost.json',
             ]
           env:
             - name: INFRACOST_API_KEY
