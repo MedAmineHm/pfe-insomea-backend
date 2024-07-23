@@ -12,15 +12,20 @@ spec:
             [
               'sh',
               '-c',
-              'infracost breakdown --path=/path/to/terraform --format=json --out-file=/data/infracost.json',
+              'infracost breakdown --path=/terraform-codes/terraform --format=json --out-file=/data/infracost.json',
             ]
           env:
             - name: INFRACOST_API_KEY
               value: 'ico-Vl2mxmC2iGdpEQQkwwqmjIkhjZjiJbnF'
           volumeMounts:
+            - name: terraform-data
+              mountPath: /terraform-codes
             - name: infracost-data
               mountPath: /data
       volumes:
+        - name: terraform-data
+          persistentVolumeClaim:
+            claimName: terraform-pvc
         - name: infracost-data
           persistentVolumeClaim:
             claimName: infracost-pvc
