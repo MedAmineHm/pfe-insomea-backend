@@ -17,3 +17,6 @@ COPY . .
 EXPOSE 3001
 
 CMD ["npm", "run", "start:prod"]
+
+# Vérification de l'installation d'Infracost
+RUN infracost --version

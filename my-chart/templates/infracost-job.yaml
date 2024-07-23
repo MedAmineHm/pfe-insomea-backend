@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: infracost-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: infracost
+          image: mohamedamine1/backend:backend-pfe
+          command:
+            [
+              'sh',
+              '-c',
+              'infracost breakdown --path=/path/to/terraform --format=json --out-file=/data/infracost.json',
+            ]
+          env:
+            - name: INFRACOST_API_KEY
+              value: 'ico-Vl2mxmC2iGdpEQQkwwqmjIkhjZjiJbnF'
+          volumeMounts:
+            - name: infracost-data
+              mountPath: /data
+      volumes:
+        - name: infracost-data
+          persistentVolumeClaim:
+            claimName: infracost-pvc
+      restartPolicy: OnFailure
