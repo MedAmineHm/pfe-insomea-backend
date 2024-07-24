@@ -36,7 +36,7 @@ spec:
               mountPath: /terraform-codes
         - name: infracost
           image: infracost/infracost:latest
-          command: ['sh', '-c', 'sleep infinity'] # Keeps the container running for command execution
+          command: ['sh', '-c', 'sleep infinity']
           env:
             - name: INFRACOST_API_KEY
               valueFrom:
