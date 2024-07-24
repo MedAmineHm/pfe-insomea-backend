@@ -26,9 +26,14 @@ spec:
               value: redis-service
             - name: REDIS_PORT
               value: '6379'
+            - name: INFRACOST_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: infracost-secrets
+                  key: api-key
           volumeMounts:
             - name: terraform-code
-              mountPath: /terraform-codes/${folderName}
+              mountPath: /terraform-codes
         - name: infracost
           image: infracost/infracost:latest
           command: ['sh', '-c', 'sleep infinity'] # Keeps the container running for command execution
@@ -40,7 +45,7 @@ spec:
                   key: api-key
           volumeMounts:
             - name: terraform-code
-              mountPath: /terraform-codes/${folderName}
+              mountPath: /terraform-codes
       volumes:
         - name: terraform-code
           emptyDir: {}
