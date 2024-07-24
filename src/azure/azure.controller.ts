@@ -130,7 +130,7 @@ export class AzureController {
     }
   }
 
-  // GET: /azure/vm-sizes/
+  // GET: /azure/vm-sizes
   @Get('vm-sizes')
   // @UseGuards(AuthGuard('jwt'))
   async getAllVmSizes() {
