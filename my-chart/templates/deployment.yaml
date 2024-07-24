@@ -46,6 +46,28 @@ spec:
           volumeMounts:
             - name: terraform-code
               mountPath: /terraform-codes
+        - name: azure-cli
+          image: mcr.microsoft.com/azure-cli
+          command: ['sh', '-c', 'sleep infinity']
+          env:
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-secrets
+                  key: client-id
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: azure-secrets
+                  key: client-secret
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-secrets
+                  key: tenant-id
+          volumeMounts:
+            - name: terraform-code
+              mountPath: /terraform-codes
       volumes:
         - name: terraform-code
           emptyDir: {}
