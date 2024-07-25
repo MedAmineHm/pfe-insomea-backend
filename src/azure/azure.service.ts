@@ -44,9 +44,9 @@ export class AzureService {
   }
 
   async getAllLocations() {
-    const locationsCache: Array<any> =
+    /*const locationsCache: Array<any> =
       (await this.cacheManager.get('azure-locations')) || [];
-    if (locationsCache.length) return locationsCache;
+    if (locationsCache.length) return locationsCache;*/
     const locations = await this.locationModel.find();
     await this.cacheManager.set('azure-locations', locations);
     return locations;
