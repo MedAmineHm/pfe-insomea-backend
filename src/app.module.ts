@@ -26,6 +26,7 @@ import { BoardModule } from './board/board.module';
         }),
       }),
     }),
+
     AzureModule,
     UserModule,
     AuthModule,
