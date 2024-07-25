@@ -35,10 +35,12 @@ export class AzureService {
 
     // delete all locations if exists:
     await this.locationModel.deleteMany({});
-    // inset new locations:
+    // insert new locations:
     const savedLocations = await this.locationModel.insertMany(validLocations);
     // setting locations to cache
-    await this.cacheManager.set('azure-locations', savedLocations);
+    if (savedLocations.length) {
+      await this.cacheManager.set('azure-locations', savedLocations);
+    }
 
     return savedLocations;
   }
@@ -50,7 +52,9 @@ export class AzureService {
       return locationsCache;
     }
     const locations = await this.locationModel.find();
-    await this.cacheManager.set('azure-locations', locations);
+    if (locations.length) {
+      await this.cacheManager.set('azure-locations', locations);
+    }
     return locations;
   }
 
@@ -63,9 +67,7 @@ export class AzureService {
       [],
     )(locations);
 
-    const diff = function (a: any, b: any) {
-      return a - b;
-    };
+    const diff = (a: any, b: any) => a - b;
     return sort(diff, locationNames);
   }
 
@@ -77,7 +79,9 @@ export class AzureService {
     if (locationCache) return locationCache;
 
     const location = await this.locationModel.findOne({ name });
-    await this.cacheManager.set(`azure-locations-${name}`, location);
+    if (location) {
+      await this.cacheManager.set(`azure-locations-${name}`, location);
+    }
     return location;
   }
 
@@ -88,10 +92,12 @@ export class AzureService {
     const images = JSON.parse(imagesData);
     // delete all images if exists:
     await this.imageModel.deleteMany({});
-    // inset new images:
+    // insert new images:
     const savedImages = await this.imageModel.insertMany(images);
-    // setting locations to cache
-    await this.cacheManager.set('azure-images', savedImages);
+    // setting images to cache
+    if (savedImages.length) {
+      await this.cacheManager.set('azure-images', savedImages);
+    }
     return savedImages;
   }
 
@@ -99,7 +105,9 @@ export class AzureService {
     const imagesCache = await this.cacheManager.get('azure-images');
     if (imagesCache && isEmpty(query)) return imagesCache;
     const images = await this.imageModel.find(query);
-    if (isEmpty(query)) await this.cacheManager.set('azure-images', images);
+    if (images.length) {
+      if (isEmpty(query)) await this.cacheManager.set('azure-images', images);
+    }
     return images;
   }
 
@@ -107,11 +115,13 @@ export class AzureService {
     const imageByUrnCache = await this.cacheManager.get(`azure-images-${urn}`);
     if (imageByUrnCache) return imageByUrnCache;
     const image = await this.imageModel.findOne({ urn });
-    await this.cacheManager.set(`azure-images-${urn}`, image);
+    if (image) {
+      await this.cacheManager.set(`azure-images-${urn}`, image);
+    }
     return image;
   }
 
-  // ========================= vm-sizes ======================================
+  // ========================= VM SIZES ======================================
 
   async loadVmSizesToDB() {
     const locations = await this.locationModel.find();
@@ -137,13 +147,14 @@ export class AzureService {
       };
     });
 
-    // delete all locations if exists
+    // delete all VM sizes if exists
     await this.vmSizeModel.deleteMany({});
-    // inset new locations
+    // insert new VM sizes
     const savedVmSizes = await this.vmSizeModel.insertMany(formatedResult);
     // setting vm-sizes to cache
-    await this.cacheManager.set('azure-vm-sizes', savedVmSizes);
-
+    if (savedVmSizes.length) {
+      await this.cacheManager.set('azure-vm-sizes', savedVmSizes);
+    }
     return savedVmSizes;
   }
 
@@ -151,8 +162,9 @@ export class AzureService {
     const vmSizesCache = await this.cacheManager.get('azure-vm-sizes');
     if (vmSizesCache) return vmSizesCache;
     const vmSizes = await this.vmSizeModel.find();
-    // setting vm-sizes to cache
-    await this.cacheManager.set('azure-vm-sizes', vmSizes);
+    if (vmSizes.length) {
+      await this.cacheManager.set('azure-vm-sizes', vmSizes);
+    }
     return vmSizes;
   }
 
@@ -168,14 +180,16 @@ export class AzureService {
 
     const localVmSizesOptionsFiltered = filter(
       (option: any) => whereEq(query)(option),
-      localVmSizes.options,
+      localVmSizes?.options || [],
     );
 
-    if (isEmpty(query))
-      await this.cacheManager.set(
-        `azure-vm-sizes-${locationName}`,
-        localVmSizes,
-      );
+    if (localVmSizes) {
+      if (isEmpty(query))
+        await this.cacheManager.set(
+          `azure-vm-sizes-${locationName}`,
+          localVmSizes,
+        );
+    }
 
     return { location: locationName, options: localVmSizesOptionsFiltered };
   }
@@ -189,11 +203,17 @@ export class AzureService {
       const localVmSizes = await this.vmSizeModel.findOne({
         location: locationName,
       });
-      await this.cacheManager.set(
-        `azure-vm-sizes-${locationName}`,
-        localVmSizes,
-      );
-      vmSizeCache = localVmSizes;
+      if (localVmSizes) {
+        await this.cacheManager.set(
+          `azure-vm-sizes-${locationName}`,
+          localVmSizes,
+        );
+        vmSizeCache = localVmSizes;
+      }
+    }
+
+    if (!vmSizeCache) {
+      return { options: {} }; // Default response if no cache and no data
     }
 
     const maxDataDiskCountOptions = new Set();
@@ -211,9 +231,7 @@ export class AzureService {
       resourceDiskSizeInMBOptions.add(option.resourceDiskSizeInMB.toString());
     });
 
-    const diff = function (a: any, b: any) {
-      return a - b;
-    };
+    const diff = (a: any, b: any) => a - b;
 
     const options = {
       maxDataDiskCount: sort(diff, Array.from(maxDataDiskCountOptions)),
