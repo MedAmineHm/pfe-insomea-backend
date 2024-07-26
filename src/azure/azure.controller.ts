@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { AzureService } from './azure.service';
 import { GetImagesDto } from './dtos/GetImages.dto';
 import { GetVmSizesDto } from './dtos/GetVmSizes.dto';
 import { VmSizesPipe } from './pipes/vmSizesPipe';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('azure')
 export class AzureController {
@@ -161,8 +163,9 @@ export class AzureController {
     }
   }
 
+  // AzureController.ts
   @Get('vm-sizes/:locationName/options')
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt')) // Ensure the guard is applied
   async getLocalVmSizesOptions(@Param('locationName') locationName: string) {
     try {
       const options = await this.azureService.getLocationOptions(locationName);

@@ -96,7 +96,7 @@ export class AzureService {
   }
 
   async getAllImages(query: GetImagesDto) {
-    const imagesCache: Array<any> = await this.cacheManager.get('azure-images');
+    const imagesCache = await this.cacheManager.get('azure-images');
     if (imagesCache && isEmpty(query)) return imagesCache;
     const images = await this.imageModel.find(query);
     if (isEmpty(query)) await this.cacheManager.set('azure-images', images);
@@ -148,8 +148,7 @@ export class AzureService {
   }
 
   async getAllVmSizes() {
-    const vmSizesCache: Array<any> =
-      await this.cacheManager.get('azure-vm-sizes');
+    const vmSizesCache = await this.cacheManager.get('azure-vm-sizes');
     if (vmSizesCache) return vmSizesCache;
     const vmSizes = await this.vmSizeModel.find();
     // setting vm-sizes to cache
@@ -158,7 +157,7 @@ export class AzureService {
   }
 
   async getVmSizesByLocation(locationName: string, query: GetVmSizesDto) {
-    const vmSizeCache: Array<any> = await this.cacheManager.get(
+    const vmSizeCache = await this.cacheManager.get(
       `azure-vm-sizes-${locationName}`,
     );
     if (vmSizeCache && isEmpty(query)) return vmSizeCache;
