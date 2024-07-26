@@ -1,13 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import cors from 'cors'; // Change to default import
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: '*', // Allow requests from any origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Include credentials in requests
-  });
+
+  app.use(
+    cors({
+      credentials: true,
+    }),
+  );
+
   await app.listen(3001);
 }
 bootstrap();
