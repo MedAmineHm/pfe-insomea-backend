@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
 import { AzureModule } from './azure/azure.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { CacheModule } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-yet';
 import { TerraformModule } from './terraform/terraform.module';
 import { BoardModule } from './board/board.module';
 
@@ -24,9 +24,10 @@ import { BoardModule } from './board/board.module';
             port: parseInt(process.env.REDIS_PORT, 10),
           },
         }),
+        ttl: 5, // seconds
+        max: 10, // maximum number of items in cache
       }),
     }),
-
     AzureModule,
     UserModule,
     AuthModule,
