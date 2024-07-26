@@ -35,12 +35,10 @@ export class AzureService {
 
     // delete all locations if exists:
     await this.locationModel.deleteMany({});
-    // insert new locations:
+    // inset new locations:
     const savedLocations = await this.locationModel.insertMany(validLocations);
     // setting locations to cache
-    if (savedLocations.length) {
-      await this.cacheManager.set('azure-locations', savedLocations);
-    }
+    await this.cacheManager.set('azure-locations', savedLocations);
 
     return savedLocations;
   }
@@ -52,9 +50,7 @@ export class AzureService {
       return locationsCache;
     }
     const locations = await this.locationModel.find();
-    if (locations.length) {
-      await this.cacheManager.set('azure-locations', locations);
-    }
+    await this.cacheManager.set('azure-locations', locations);
     return locations;
   }
 
@@ -67,7 +63,9 @@ export class AzureService {
       [],
     )(locations);
 
-    const diff = (a: any, b: any) => a - b;
+    const diff = function (a: any, b: any) {
+      return a - b;
+    };
     return sort(diff, locationNames);
   }
 
@@ -79,9 +77,7 @@ export class AzureService {
     if (locationCache) return locationCache;
 
     const location = await this.locationModel.findOne({ name });
-    if (location) {
-      await this.cacheManager.set(`azure-locations-${name}`, location);
-    }
+    await this.cacheManager.set(`azure-locations-${name}`, location);
     return location;
   }
 
@@ -92,22 +88,18 @@ export class AzureService {
     const images = JSON.parse(imagesData);
     // delete all images if exists:
     await this.imageModel.deleteMany({});
-    // insert new images:
+    // inset new images:
     const savedImages = await this.imageModel.insertMany(images);
-    // setting images to cache
-    if (savedImages.length) {
-      await this.cacheManager.set('azure-images', savedImages);
-    }
+    // setting locations to cache
+    await this.cacheManager.set('azure-images', savedImages);
     return savedImages;
   }
 
   async getAllImages(query: GetImagesDto) {
-    const imagesCache = await this.cacheManager.get('azure-images');
+    const imagesCache: Array<any> = await this.cacheManager.get('azure-images');
     if (imagesCache && isEmpty(query)) return imagesCache;
     const images = await this.imageModel.find(query);
-    if (images.length) {
-      if (isEmpty(query)) await this.cacheManager.set('azure-images', images);
-    }
+    if (isEmpty(query)) await this.cacheManager.set('azure-images', images);
     return images;
   }
 
@@ -115,13 +107,11 @@ export class AzureService {
     const imageByUrnCache = await this.cacheManager.get(`azure-images-${urn}`);
     if (imageByUrnCache) return imageByUrnCache;
     const image = await this.imageModel.findOne({ urn });
-    if (image) {
-      await this.cacheManager.set(`azure-images-${urn}`, image);
-    }
+    await this.cacheManager.set(`azure-images-${urn}`, image);
     return image;
   }
 
-  // ========================= VM SIZES ======================================
+  // ========================= vm-sizes ======================================
 
   async loadVmSizesToDB() {
     const locations = await this.locationModel.find();
@@ -147,29 +137,28 @@ export class AzureService {
       };
     });
 
-    // delete all VM sizes if exists
+    // delete all locations if exists
     await this.vmSizeModel.deleteMany({});
-    // insert new VM sizes
+    // inset new locations
     const savedVmSizes = await this.vmSizeModel.insertMany(formatedResult);
     // setting vm-sizes to cache
-    if (savedVmSizes.length) {
-      await this.cacheManager.set('azure-vm-sizes', savedVmSizes);
-    }
+    await this.cacheManager.set('azure-vm-sizes', savedVmSizes);
+
     return savedVmSizes;
   }
 
   async getAllVmSizes() {
-    const vmSizesCache = await this.cacheManager.get('azure-vm-sizes');
+    const vmSizesCache: Array<any> =
+      await this.cacheManager.get('azure-vm-sizes');
     if (vmSizesCache) return vmSizesCache;
     const vmSizes = await this.vmSizeModel.find();
-    if (vmSizes.length) {
-      await this.cacheManager.set('azure-vm-sizes', vmSizes);
-    }
+    // setting vm-sizes to cache
+    await this.cacheManager.set('azure-vm-sizes', vmSizes);
     return vmSizes;
   }
 
   async getVmSizesByLocation(locationName: string, query: GetVmSizesDto) {
-    const vmSizeCache = await this.cacheManager.get(
+    const vmSizeCache: Array<any> = await this.cacheManager.get(
       `azure-vm-sizes-${locationName}`,
     );
     if (vmSizeCache && isEmpty(query)) return vmSizeCache;
@@ -180,16 +169,14 @@ export class AzureService {
 
     const localVmSizesOptionsFiltered = filter(
       (option: any) => whereEq(query)(option),
-      localVmSizes?.options || [],
+      localVmSizes.options,
     );
 
-    if (localVmSizes) {
-      if (isEmpty(query))
-        await this.cacheManager.set(
-          `azure-vm-sizes-${locationName}`,
-          localVmSizes,
-        );
-    }
+    if (isEmpty(query))
+      await this.cacheManager.set(
+        `azure-vm-sizes-${locationName}`,
+        localVmSizes,
+      );
 
     return { location: locationName, options: localVmSizesOptionsFiltered };
   }
@@ -203,17 +190,11 @@ export class AzureService {
       const localVmSizes = await this.vmSizeModel.findOne({
         location: locationName,
       });
-      if (localVmSizes) {
-        await this.cacheManager.set(
-          `azure-vm-sizes-${locationName}`,
-          localVmSizes,
-        );
-        vmSizeCache = localVmSizes;
-      }
-    }
-
-    if (!vmSizeCache) {
-      return { options: {} }; // Default response if no cache and no data
+      await this.cacheManager.set(
+        `azure-vm-sizes-${locationName}`,
+        localVmSizes,
+      );
+      vmSizeCache = localVmSizes;
     }
 
     const maxDataDiskCountOptions = new Set();
@@ -231,7 +212,9 @@ export class AzureService {
       resourceDiskSizeInMBOptions.add(option.resourceDiskSizeInMB.toString());
     });
 
-    const diff = (a: any, b: any) => a - b;
+    const diff = function (a: any, b: any) {
+      return a - b;
+    };
 
     const options = {
       maxDataDiskCount: sort(diff, Array.from(maxDataDiskCountOptions)),
