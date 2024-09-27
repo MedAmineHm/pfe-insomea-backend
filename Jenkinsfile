@@ -18,17 +18,7 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Analysis') {
-    steps {
-        script {
-        withSonarQubeEnv ('sonarqube') {
-        
-            sh 'npm run sonar'
 
-        }     
-        } 
-    }
-}
 
     }
 }
