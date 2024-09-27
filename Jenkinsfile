@@ -18,5 +18,17 @@ pipeline {
                 }
             }
         }
+        stage('SonarQube Analysis') {
+    steps {
+        script {
+        withSonarQubeEnv ('sonarQube') {
+        
+            sh 'npm clean package sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
+
+        }     
+        } 
+    }
+}
+
     }
 }
