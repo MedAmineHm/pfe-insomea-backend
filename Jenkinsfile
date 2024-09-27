@@ -23,7 +23,7 @@ pipeline {
         script {
         withSonarQubeEnv ('sonarqube') {
         
-            sh 'npm clean package sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
+            sh 'npm run sonar'
 
         }     
         } 
