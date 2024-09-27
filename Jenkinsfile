@@ -21,7 +21,7 @@ pipeline {
         stage('SonarQube Analysis') {
     steps {
         script {
-        withSonarQubeEnv ('sonarQube') {
+        withSonarQubeEnv ('sonarqube') {
         
             sh 'npm clean package sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
 
