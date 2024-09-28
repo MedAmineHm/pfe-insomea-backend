@@ -27,17 +27,29 @@ pipeline {
                 } 
             }
         }
-        stage('Nexus') {
-            steps {
-                script {
-                    try {
-                        sh 'npm publish'
-                    } catch (err) {
-                        echo "An error occurred while publishing to Nexus: ${err}"
-                        error "Nexus publishing failed"
+ stage('Nexus') {
+    steps {
+        script {
+            def maxRetries = 3
+            def retryCount = 0
+            def success = false
+            
+            while (retryCount < maxRetries && !success) {
+                try {
+                    sh 'npm publish'
+                    success = true
+                } catch (err) {
+                    retryCount++
+                    echo "Attempt ${retryCount} failed: ${err}"
+                    if (retryCount >= maxRetries) {
+                        error "Nexus publishing failed after ${maxRetries} attempts"
                     }
+                    sleep(5) // Wait for a few seconds before retrying
                 }
             }
         }
+    }
+}
+
     }
 }
