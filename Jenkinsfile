@@ -18,6 +18,18 @@ pipeline {
                 }
             }
         }
+              stage('SonarQube Analysis') {
+    steps {
+        script {
+        withSonarQubeEnv ('sonarqube') {
+        
+            sh 'npm install sonar-scanner'
+            sh 'npm run sonar'
+
+        }     
+        } 
+    }
+}
 
 
     }
