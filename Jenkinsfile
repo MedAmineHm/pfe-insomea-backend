@@ -30,6 +30,13 @@ pipeline {
         } 
     }
 }
+  stage('nexus') {
+            steps {
+                sh 'npm publish'
+                
+            }
+        }
+        
 
 
     }
