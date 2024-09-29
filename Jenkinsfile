@@ -30,7 +30,7 @@ pipeline {
         stage('buils docker image') {
             steps{
               script{
-                sh 'docker build -t backend-azure:backend . '
+                sh 'docker build -t mohamedamine1/backend-azure:backend . '
               }  
             }
         }
