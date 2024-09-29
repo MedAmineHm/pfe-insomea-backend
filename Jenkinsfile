@@ -27,29 +27,14 @@ pipeline {
                 } 
             }
         }
- stage('Nexus') {
-    steps {
-        script {
-            def maxRetries = 3
-            def retryCount = 0
-            def success = false
-            
-            while (retryCount < maxRetries && !success) {
-                try {
-                    sh 'npm publish'
-                    success = true
-                } catch (err) {
-                    retryCount++
-                    echo "Attempt ${retryCount} failed: ${err}"
-                    if (retryCount >= maxRetries) {
-                        error "Nexus publishing failed after ${maxRetries} attempts"
-                    }
-                    sleep(5) // Wait for a few seconds before retrying
-                }
+        stage('buils docker image') {
+            steps{
+              script{
+                sh 'docker build -t backend-azure:backend . '
+              }  
             }
         }
-    }
-}
+
 
     }
 }
